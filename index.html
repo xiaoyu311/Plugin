@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  ul, li{
+    list-style: none;
+  }
+  img{
+    display: inline-block;
+  }
+  body{
+    padding: 100px;
+    background-color: #323232;
+  }
+  .nav-wrap{
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  li{
+    width: 15%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    background-color: #676767;
+    border-radius: 4px 4px 4px 4px;
+    transition: all 0.5s;
+    cursor:pointer
+  }
+  .content div{
+    display: none;
+  }
+  .content div img{
+    width: 500px;
+    height: 300px;
+    position: absolute;
+  }
+  .active{
+    background: #fff;
+    color: #030303;
+  }
+  .content .actived{
+    display: block;
+  }
+</style>
+<body>
+  <div class="tab" data-config='{
+    "triggerType": "click",
+    "effect": "fade",
+    "invoke": "2",
+    "auto": "1000"
+  }'>
+    <ul class="nav-wrap">
+      <li class="active nav-item">first</li>
+      <li class="nav-item">second</li>
+      <li class="nav-item">third</li>
+      <li class="nav-item">forth</li>
+    </ul>
+    <div class="content">
+      <div class="content-item actived">
+        <img src="http://img0.imgtn.bdimg.com/it/u=783060973,4278100629&fm=27&gp=0.jpg">
+      </div>
+      <div class="content-item">
+        <img src="http://img1.3lian.com/img13/c3/5/d/92.jpg">
+      </div>
+      <div class="content-item">
+        <img src="http://img4.imgtn.bdimg.com/it/u=2186456770,3784679422&fm=27&gp=0.jpg" alt="">
+      </div>
+      <div class="content-item">
+        <img src="http://img5.imgtn.bdimg.com/it/u=990001638,2083885787&fm=27&gp=0.jpg" alt="">
+      </div>
+    </div>
+</div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="./tab.js"></script>
+  <script>
+    $(function () {
+      var tab = new Tab($('div.tab').eq(0))
+      // console.log(tab)
+    })
+  </script>
+</body>
+
+</html>
