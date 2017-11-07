@@ -19,29 +19,28 @@
     //保存配置參數
     var config = this.config
     
-    if (config.triggerType === 'click') {
-      this.Navitem.bind(config.triggerType, function () {
+    if (config.triggerType) {
+      this.Navitem.on(config.triggerType, function () {
         _this_.invoke($(this))
-        clearInterval(_this_.timer)
       })
-      // this.Navitem.mouseleave(function() {
-      //   this.autoPlay()
-      // })
-    }else{
-      this.Navitem.mouseenter(function() {
-        _this_.invoke($(this))
-        clearInterval(_this_.timer)
-      })
-      // this.Navitem.mouseleave(function () {
-      //   this.autoPlay()
-      // })
     }
 
     //自动轮播
     if (config.auto === 'none') {
       return
     }else{
-      this.autoPlay()
+      this.timer = null
+      _this_.autoPlay()
+      this.loop = 0
+      this.tab.hover(function() {
+        clearInterval(_this_.timer)
+      },function() {
+        _this_.autoPlay()        
+      })
+    }
+    //invoke
+    if (config.invoke>1) {
+      this.invoke(this.Navitem.eq(config.invoke - 1))
     }
   }
   Tab.prototype = {
@@ -54,6 +53,8 @@
         return null
       }
     },
+    //setInterval函数里面的this指向window
+    //所以需要在property函数里面重新赋值一下this
     invoke: function(currentTab) {
       var _this_ = this
       var index = currentTab.index()
@@ -64,22 +65,21 @@
         currentTab.addClass('active').siblings().removeClass('active')
         this.ContentItem.eq(index).addClass('actived').siblings().removeClass('actived')
       }
+      if (this.config.auto !== 'none') {
+        this.loop = index
+      }
     },
     autoPlay: function() {
+      var _this_ = this
       var Navitem = this.Navitem
       var length = Navitem.length
-      var loop = 0
       var config = this.config
-      console.log(config)
       this.timer = setInterval(function() {
-        Navitem.eq(loop).trigger(config.triggerType)
-        loop += 1
-        console.log(loop)
-        // if (loop >= length) {
-        //   console.log(1)
-        //   loop = 0
-        // }
-        // console.log(loop)
+        Navitem.eq(_this_.loop).trigger(config.triggerType)
+        _this_.loop += 1
+        if (_this_.loop >= length) {
+          _this_.loop = 0
+        }
       }, config.auto)
     }
   }
